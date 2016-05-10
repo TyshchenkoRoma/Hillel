@@ -12,7 +12,7 @@ public class Controller {
         this.view = view;
     }
 
-    public void userProcess() {
-        System.out.println(String.format(view.POSITIVE_EL, model.getPositiveValue(model.array)));
+    public void processUser() {
+        System.out.println(String.format(view.NUMBER, model.givenEl, model.getNumberEl(model.array)));
     }
 }
