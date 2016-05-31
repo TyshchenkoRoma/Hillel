@@ -32,10 +32,14 @@ public class PlaneApp {
 class Plane {
     PlaneStates planeStates;
     private boolean isFlying;
+    private boolean mushinGun;
+    private boolean gun;
+
 
     public Plane(PlaneStates planeStates) {
         this.planeStates = planeStates;
         isFlying = false;
+
     }
 
     public void setPlaneStates(PlaneStates planeStates) {
