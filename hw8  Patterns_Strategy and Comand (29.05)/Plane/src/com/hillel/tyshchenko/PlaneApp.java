@@ -1,8 +1,5 @@
 package com.hillel.tyshchenko;
 
-/**
- * Created by roman on 30.05.16.
- */
 public class PlaneApp {
     public static void main(String[] args) {
         PlaneStates ps = new Fly();
@@ -10,19 +7,35 @@ public class PlaneApp {
         PlaneStates psShoot = new Shoot();
 
         Plane plane = new Plane(ps);
+
+        plane.setPlaneStates(psShoot);
+        plane.performAction(psShoot);
+
         plane.setPlaneStates(ps);
         plane.performAction(ps);
 
         plane.setPlaneStates(psShoot);
         plane.performAction(psShoot);
+
+        plane.setPlaneStates(psGround);
+        plane.performAction(psGround);
+
+        plane.setPlaneStates(psShoot);
+        plane.performAction(psShoot);
+
+        plane.setPlaneStates(psShoot);
+        plane.performAction(psShoot);
+
     }
 }
 
 class Plane {
     PlaneStates planeStates;
+    private boolean isFlying;
 
     public Plane(PlaneStates planeStates) {
         this.planeStates = planeStates;
+        isFlying = false;
     }
 
     public void setPlaneStates(PlaneStates planeStates) {
@@ -30,7 +43,16 @@ class Plane {
     }
 
     void performAction(PlaneStates ps) {
-
+        if (ps instanceof Shoot && !isFlying) {
+            System.out.println("Plane on the ground! You can't shoot now!");
+            return;
+        }
+        if (ps instanceof Fly) {
+            isFlying = true;
+        }
+        if (ps instanceof Ground) {
+            isFlying = false;
+        }
         ps.action();
     }
 }
@@ -49,13 +71,12 @@ class Fly implements PlaneStates {
 class Ground implements PlaneStates {
     @Override
     public void action() {
-        //     if ()
         System.out.println("Plane on the grount");
     }
 }
 
-class Shoot extends Fly {
-    public void action(Fly fly) {
+class Shoot implements PlaneStates {
+    public void action() {
         System.out.println("Plain is SHOOT ......");
     }
 }
