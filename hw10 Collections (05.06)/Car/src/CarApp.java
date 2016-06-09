@@ -23,9 +23,7 @@ public class CarApp {
             }
         });
         System.out.println(cars);
-//        Comparator<Car> comp = (o1 , o2) -> o1.manufacturer.compareTo(o2.manufacturer);
-//        cars.sort(comp.thenComparing( (o1, o2 ) -> o1.oodel.compareTo(o2.model)));
-
+        cars.sort(Comparator.comparing(Car::getManufacturer).thenComparing(Car::getModel));
         System.out.println(cars);
     }
 }
@@ -45,6 +43,13 @@ class Car {
         this.price = price;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public String getModel() {
+        return model;
+    }
 
     @Override
     public String toString() {

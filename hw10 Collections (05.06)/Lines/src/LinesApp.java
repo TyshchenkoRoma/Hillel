@@ -15,19 +15,32 @@ public class LinesApp {
         List<String> list = new ArrayList<>(strings.length);
         List<String> listUperCase = new ArrayList<>(strings.length);
 
-        Map <Integer, String> map = new HashMap<>();
-        int number = 1;
+        Map <String, Integer> map = new HashMap<>();
         for (String s : strings) {
-            String text = map.get(s);
+            Integer text = map.get(s);
             if (text == null ) {
-                map.put(1, s);
+                map.put(s, 1);
             }else {
-                map.put(number+1,text);
+                map.put(s,text+1);
             }
             list.add(s);
             listUperCase.add(s.toUpperCase());
         }
         System.out.println(map);
+        list.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                int res = map.get(o1) - map.get(o2);
+                if (res != 0)
+                return res;
+                else {
+                    return o1.compareTo(o2);
+                }
+            }
+        });
+        System.out.println("after compering map = "+ list);
+
+
         list.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
