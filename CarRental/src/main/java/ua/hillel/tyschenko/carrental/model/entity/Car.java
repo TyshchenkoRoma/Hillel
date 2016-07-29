@@ -9,11 +9,11 @@ public class Car {
         System.out.println("TEST for working Maven project" );
     }
     private String carModel;
-    private int carId;
     CarColour carColour;
     private String description;
     private int yearOfManufacture;
     private int rentPrice;
+    private int carId;
 
 
     public int getRentPrice() {
@@ -89,6 +89,6 @@ public class Car {
                 '}';
     }
 
-    private enum CarColour {WHITE, BLACK, RED, YELLOW, BLUE};
+    public enum CarColour {WHITE, BLACK, RED, YELLOW, BLUE};
 }
 
