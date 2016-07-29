@@ -1,0 +1,92 @@
+package ua.hillel.tyschenko.carrental.model.entity;
+
+/**
+ * Created by roman on 29.07.16.
+ */
+public class Car {
+    public static void main(String[] args) {
+        System.out.println("TEST for working Maven project ");
+    }
+    private String carName;
+    private int carId;
+    CarColour carColour;
+    private String description;
+    private int yearOfIssue;
+    private int rentPrice;
+
+    public int getRentPrice() {
+        return rentPrice;
+    }
+
+    public void setRentPrice(int rentPrice) {
+        this.rentPrice = rentPrice;
+    }
+
+    public CarColour getCarColour() {
+        return carColour;
+    }
+
+    public void setCarColour(CarColour carColour) {
+        this.carColour = carColour;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getYearOfIssue() {
+        return yearOfIssue;
+    }
+
+    public void setYearOfIssue(int yearOfIssue) {
+        this.yearOfIssue = yearOfIssue;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
+    }
+
+    public int getCarId() {
+        return carId;
+    }
+
+    public void setCarId(int carId) {
+        this.carId = carId;
+    }
+
+
+    @Override
+    public int hashCode() {
+        int result = getCarName() != null ? getCarName().hashCode() : 0;
+        result = 31 * result + getCarId();
+        result = 31 * result + (getCarColour() != null ? getCarColour().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + getYearOfIssue();
+        result = 31 * result + getRentPrice();
+        return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "carName='" + carName + '\'' +
+                ", carId=" + carId +
+                ", carColour=" + carColour +
+                ", description='" + description + '\'' +
+                ", yearOfIssue=" + yearOfIssue +
+                ", rentPrice=" + rentPrice +
+                '}';
+    }
+
+    private enum CarColour {WHITE, BLACK, RED, YELLOW, BLUE};
+}
+
