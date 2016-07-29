@@ -5,14 +5,16 @@ package ua.hillel.tyschenko.carrental.model.entity;
  */
 public class Car {
     public static void main(String[] args) {
-        System.out.println("TEST for working Maven project ");
+
+        System.out.println("TEST for working Maven project" );
     }
     private String carName;
     private int carId;
     CarColour carColour;
     private String description;
-    private int yearOfIssue;
+    private int yearOfManufacture;
     private int rentPrice;
+
 
     public int getRentPrice() {
         return rentPrice;
@@ -38,12 +40,12 @@ public class Car {
         this.description = description;
     }
 
-    public int getYearOfIssue() {
-        return yearOfIssue;
+    public int getYearOfManufacture() {
+        return yearOfManufacture;
     }
 
     public void setYearOfIssue(int yearOfIssue) {
-        this.yearOfIssue = yearOfIssue;
+        this.yearOfManufacture = yearOfIssue;
     }
 
     public String getCarName() {
@@ -69,7 +71,7 @@ public class Car {
         result = 31 * result + getCarId();
         result = 31 * result + (getCarColour() != null ? getCarColour().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + getYearOfIssue();
+        result = 31 * result + getYearOfManufacture();
         result = 31 * result + getRentPrice();
         return result;
     }
@@ -82,7 +84,7 @@ public class Car {
                 ", carId=" + carId +
                 ", carColour=" + carColour +
                 ", description='" + description + '\'' +
-                ", yearOfIssue=" + yearOfIssue +
+                ", yearOfManufacrure=" + yearOfManufacture +
                 ", rentPrice=" + rentPrice +
                 '}';
     }
