@@ -8,7 +8,7 @@ public class Car {
 
         System.out.println("TEST for working Maven project" );
     }
-    private String carName;
+    private String carModel;
     private int carId;
     CarColour carColour;
     private String description;
@@ -44,16 +44,16 @@ public class Car {
         return yearOfManufacture;
     }
 
-    public void setYearOfIssue(int yearOfIssue) {
+    public void setYearOfManufacture(int yearOfIssue) {
         this.yearOfManufacture = yearOfIssue;
     }
 
-    public String getCarName() {
-        return carName;
+    public String getCarModel() {
+        return carModel;
     }
 
-    public void setCarName(String carName) {
-        this.carName = carName;
+    public void setCarModel(String carName) {
+        this.carModel = carName;
     }
 
     public int getCarId() {
@@ -67,7 +67,7 @@ public class Car {
 
     @Override
     public int hashCode() {
-        int result = getCarName() != null ? getCarName().hashCode() : 0;
+        int result = getCarModel() != null ? getCarModel().hashCode() : 0;
         result = 31 * result + getCarId();
         result = 31 * result + (getCarColour() != null ? getCarColour().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
@@ -80,7 +80,7 @@ public class Car {
     @Override
     public String toString() {
         return "Car{" +
-                "carName='" + carName + '\'' +
+                "carModel='" + carModel + '\'' +
                 ", carId=" + carId +
                 ", carColour=" + carColour +
                 ", description='" + description + '\'' +
