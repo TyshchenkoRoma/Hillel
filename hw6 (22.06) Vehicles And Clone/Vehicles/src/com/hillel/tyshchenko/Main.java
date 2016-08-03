@@ -1,5 +1,7 @@
 package com.hillel.tyshchenko;
 
+
+
 import java.util.Arrays;
 
 public class Main {
@@ -27,6 +29,8 @@ public class Main {
         }
         System.out.println("number of Vehicles is: " + numberVehicl + "\nnumber of truks is: " + numberTracks +
                 "\nnumber of Motorcycle YAMAHA, СА 234-34 В is: " + numberMotorcycles);
+
+
     }
 }
 

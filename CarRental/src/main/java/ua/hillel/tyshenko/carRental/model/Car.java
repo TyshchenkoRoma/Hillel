@@ -4,10 +4,7 @@ package ua.hillel.tyshenko.carRental.model;
  * Created by roman on 29.07.16.
  */
 public class Car {
-    public static void main(String[] args) {
 
-        System.out.println("TEST for working Maven project" );
-    }
     private String carModel;
     CarColour carColour;
     private String description;

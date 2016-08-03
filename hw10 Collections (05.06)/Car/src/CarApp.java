@@ -43,6 +43,7 @@ class Car {
         this.price = price;
     }
 
+
     public String getManufacturer() {
         return manufacturer;
     }
@@ -61,4 +62,5 @@ class Car {
                 fuelConsumption +
                 '}';
     }
+
 }
