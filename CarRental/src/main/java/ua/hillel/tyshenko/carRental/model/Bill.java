@@ -1,9 +1,9 @@
-package ua.hillel.tyschenko.carrental.model.entity;
+package ua.hillel.tyshenko.carRental.model;
 
 /**
  * Created by roman on 29.07.16.
  */
 public class Bill {
-    Order order;
+    private  Order order;
     private int billId;
 }

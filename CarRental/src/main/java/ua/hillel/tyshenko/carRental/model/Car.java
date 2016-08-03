@@ -1,4 +1,4 @@
-package ua.hillel.tyschenko.carrental.model.entity;
+package ua.hillel.tyshenko.carRental.model;
 
 /**
  * Created by roman on 29.07.16.
@@ -14,7 +14,15 @@ public class Car {
     private int yearOfManufacture;
     private int rentPrice;
     private int carId;
+    private boolean isRented;
 
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean rented) {
+        isRented = rented;
+    }
 
     public int getRentPrice() {
         return rentPrice;
@@ -65,6 +73,7 @@ public class Car {
     }
 
 
+
     @Override
     public int hashCode() {
         int result = getCarModel() != null ? getCarModel().hashCode() : 0;
@@ -73,19 +82,20 @@ public class Car {
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + getYearOfManufacture();
         result = 31 * result + getRentPrice();
+        result = 31 * result + (isRented() ? 1 : 0);
         return result;
     }
-
 
     @Override
     public String toString() {
         return "Car{" +
                 "carModel='" + carModel + '\'' +
-                ", carId=" + carId +
                 ", carColour=" + carColour +
                 ", description='" + description + '\'' +
-                ", yearOfManufacrure=" + yearOfManufacture +
+                ", yearOfManufacture=" + yearOfManufacture +
                 ", rentPrice=" + rentPrice +
+                ", carId=" + carId +
+                ", isRented=" + isRented +
                 '}';
     }
 
