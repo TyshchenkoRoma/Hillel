@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public class ConnectionFactory {
     // database properties initialization
-    public static final String PATH_TO_PROPERTIES = System.getProperty("user.dir") + ".git/src/main/java/ua/kiev/allexb/carrental/data/service/db.properties";
+    public static final String PATH_TO_PROPERTIES ="/home/roman/git/CarRental/src/main/java/ua/hillel/tyshenko/carRental/data/service/db.properties" /*System.getProperty("user.dir") + ".git/src/main/java/ua/kiev/allexb/carrental/data/service/db.properties"*/;
     private static final Properties properties;
     static {
         InputStream inputStream;

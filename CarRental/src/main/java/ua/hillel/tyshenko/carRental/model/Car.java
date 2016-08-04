@@ -1,17 +1,32 @@
 package ua.hillel.tyshenko.carRental.model;
 
+import java.math.BigDecimal;
+
 /**
  * Created by roman on 29.07.16.
  */
 public class Car {
 
     private String carModel;
-    CarColour carColour;
+    Colour Colour;
     private String description;
     private int yearOfManufacture;
-    private int rentPrice;
-    private int carId;
+    private BigDecimal rentPrice;
+    private Long carId;
     private boolean isRented;
+
+    public Car() {
+    }
+
+    public Car(BigDecimal rentPrice, String carModel, Car.Colour colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
+        this.rentPrice = rentPrice;
+        this.carModel = carModel;
+        Colour = colour;
+        this.description = description;
+        this.yearOfManufacture = yearOfManufacture;
+        this.carId = carId;
+        this.isRented = isRented;
+    }
 
     public boolean isRented() {
         return isRented;
@@ -21,20 +36,20 @@ public class Car {
         isRented = rented;
     }
 
-    public int getRentPrice() {
+    public BigDecimal getRentPrice() {
         return rentPrice;
     }
 
-    public void setRentPrice(int rentPrice) {
+    public void setRentPrice(BigDecimal rentPrice) {
         this.rentPrice = rentPrice;
     }
 
-    public CarColour getCarColour() {
-        return carColour;
+    public Colour getColour() {
+        return Colour;
     }
 
-    public void setCarColour(CarColour carColour) {
-        this.carColour = carColour;
+    public void setCarColour(Colour carColour) {
+        this.Colour = carColour;
     }
 
     public String getDescription() {
@@ -61,11 +76,11 @@ public class Car {
         this.carModel = carName;
     }
 
-    public int getCarId() {
+    public Long getCarId() {
         return carId;
     }
 
-    public void setCarId(int carId) {
+    public void setCarId(Long carId) {
         this.carId = carId;
     }
 
@@ -74,11 +89,11 @@ public class Car {
     @Override
     public int hashCode() {
         int result = getCarModel() != null ? getCarModel().hashCode() : 0;
-        result = 31 * result + getCarId();
-        result = 31 * result + (getCarColour() != null ? getCarColour().hashCode() : 0);
+        result = 31 * result + getCarId().hashCode();
+        result = 31 * result + (getColour() != null ? getColour().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + getYearOfManufacture();
-        result = 31 * result + getRentPrice();
+        result = 31 * result + getRentPrice().hashCode();
         result = 31 * result + (isRented() ? 1 : 0);
         return result;
     }
@@ -87,7 +102,7 @@ public class Car {
     public String toString() {
         return "Car{" +
                 "carModel='" + carModel + '\'' +
-                ", carColour=" + carColour +
+                ", carColour=" + Colour +
                 ", description='" + description + '\'' +
                 ", yearOfManufacture=" + yearOfManufacture +
                 ", rentPrice=" + rentPrice +
@@ -96,6 +111,6 @@ public class Car {
                 '}';
     }
 
-    public enum CarColour {WHITE, BLACK, RED, YELLOW, BLUE};
+    public enum Colour {WHITE, BLACK, RED, YELLOW, BLUE};
 }
 
