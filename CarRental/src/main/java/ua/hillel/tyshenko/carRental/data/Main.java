@@ -22,10 +22,10 @@ public class Main {
         car.setCarColour(Car.Colour.BLACK);
         car.setYearOfManufacture(2012);
         car.setRentPrice(new BigDecimal(2000d));
-        car.setDescription("Very fast car!");
+        car.setDescription("Very fast car! Input car");
         car.setRented(true);
 
-        //  System.out.println(car);
+          System.out.println(car);
 
         CarDAOImpl carDAO = new CarDAOImpl();
         Car carFromDB = carDAO.getById(2L).getCar();
@@ -39,7 +39,7 @@ public class Main {
         System.out.println("----");
         System.out.println(Arrays.toString(cars.toArray()));
 
-        carFromDB = carDAO.getByModel("Ferrari").getCar();
+        carFromDB = carDAO.getByModel("Ford").getCar();
 
         System.out.println(carFromDB);
     }

@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class Car {
 
     private String carModel;
-    Colour Colour;
+    private Colour Colour;
     private String description;
     private int yearOfManufacture;
     private BigDecimal rentPrice;
