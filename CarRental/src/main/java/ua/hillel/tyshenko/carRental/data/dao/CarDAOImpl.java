@@ -1,9 +1,11 @@
 package ua.hillel.tyshenko.carRental.data.dao;
 
+import org.apache.log4j.Logger;
 import ua.hillel.tyshenko.carRental.data.domain.CarDomain;
 import ua.hillel.tyshenko.carRental.data.service.ConnectionFactory;
 import ua.hillel.tyshenko.carRental.data.service.DbUtil;
 import ua.hillel.tyshenko.carRental.model.Car;
+import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,11 +13,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+//import java.util.logging.Logger;
 
 /**
  * Created by roman on 04.08.16.
  */
 public class CarDAOImpl implements CarDAO {
+
+    static final org.apache.log4j.Logger logger = ApplicationLogger.getLogger(CarDAO.class);
+
     private static final int ONE = 1;
     private static final int ALL = Integer.MAX_VALUE;
 
@@ -24,10 +30,10 @@ public class CarDAOImpl implements CarDAO {
 
     private List<CarDomain> getItems(String query, int amount) {
         ResultSet resultSet = null;
-        List<CarDomain> cars = new ArrayList<CarDomain>();
+        List<CarDomain> cars = new ArrayList<>();
         try {
-            connection = ConnectionFactory.getConnection();
             try {
+                connection = ConnectionFactory.getInstance().getConnection();
                 statement = connection.createStatement();
                 resultSet = statement.executeQuery(query);
                 if (resultSet!= null) {
@@ -50,6 +56,7 @@ public class CarDAOImpl implements CarDAO {
             DbUtil.close(statement);
             DbUtil.close(connection);
         }
+        logger.info("Get data query occurred.");
         return cars;
     }
 

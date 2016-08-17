@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * Created by roman on 16.08.16.
  */
 public class AdministratorDAOImpl implements AdministratorDAO {
-    static final Logger logger = ApplicationLogger.getLogger(AdministratorDAO.class);
+    static final org.apache.log4j.Logger logger = ApplicationLogger.getLogger(AdministratorDAO.class);
 
     private static final int ONE = 1;
     private static final int ALL = Integer.MAX_VALUE;

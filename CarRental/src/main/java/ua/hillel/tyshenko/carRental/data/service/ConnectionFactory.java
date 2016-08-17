@@ -3,7 +3,6 @@ package ua.hillel.tyshenko.carRental.data.service;
 import java.io.*;
 import java.net.URLDecoder;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -15,10 +14,11 @@ import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
  * Created by roman on 03.08.16.
  */
 public class ConnectionFactory {
+
     static final Logger logger = ApplicationLogger.getLogger(ConnectionFactory.class);
 
     // database properties file path
-    private static final String PATH_TO_PROPERTIES = getPathToProperties("db.properties");
+    private static final String PATH_TO_PROPERTIES = getPathToProperties("ua/hillel/tyshenko/carRental/data/service/db.properties");
     private static final Properties properties;
     static {
         InputStream inputStream;

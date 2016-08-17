@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 public class DbUtil {
 
-    static final Logger logger = Logger.getLogger(DbUtil.class);
+    static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(DbUtil.class);
 
     public static void close(Connection connection) {
         if (connection != null) {

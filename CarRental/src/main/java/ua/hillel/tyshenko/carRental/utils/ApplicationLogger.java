@@ -14,16 +14,16 @@ public class ApplicationLogger {
     private static final String LOGGER_PROPERTY_FILE = getRootApplicationPath("\\WEB-INF\\classes\\log4j.properties");
     private static boolean init = false;
 
-    public static Logger getLogger(Class clazz) {
+    public static org.apache.log4j.Logger getLogger(Class clazz) {
         if (!init) {
             System.setProperty("app.root", getRootApplicationPath(""));
             PropertyConfigurator.configure(LOGGER_PROPERTY_FILE);
-            Logger logger = Logger.getLogger(ApplicationLogger.class);
+            org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ApplicationLogger.class);
             logger.info("   ---==   START LOGGER SESSION   ==---");
             logger.info("Logger configured.");
             init = true;
         }
-        return Logger.getLogger(clazz);
+        return org.apache.log4j.Logger.getLogger(clazz);
     }
 
     private static String getRootApplicationPath(String fileName) {

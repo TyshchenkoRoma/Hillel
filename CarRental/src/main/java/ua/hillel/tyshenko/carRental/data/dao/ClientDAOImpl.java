@@ -1,5 +1,7 @@
 package ua.hillel.tyshenko.carRental.data.dao;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import ua.hillel.tyshenko.carRental.data.domain.ClientDomain;
 import ua.hillel.tyshenko.carRental.data.service.ConnectionFactory;
 import ua.hillel.tyshenko.carRental.data.service.DbUtil;
@@ -13,13 +15,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 /**
  * Created by roman on 17.08.16.
  */
 public class ClientDAOImpl implements ClientDAO {
-    static final Logger logger = ApplicationLogger.getLogger(ClientDAO.class);
+    static final org.apache.log4j.Logger logger = ApplicationLogger.getLogger(ClientDAO.class);
 
     private static final int ONE = 1;
     private static final int ALL = Integer.MAX_VALUE;
