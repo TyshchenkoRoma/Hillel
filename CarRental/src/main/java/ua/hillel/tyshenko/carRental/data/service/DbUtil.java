@@ -4,17 +4,22 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 /**
  * Created by roman on 03.08.16.
  */
 public class DbUtil {
+
+    static final Logger logger = Logger.getLogger(DbUtil.class);
+
     public static void close(Connection connection) {
         if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {
-                /*log or print or ignore*/
+                logger.error("Connection didn't close.");
+                logger.error(Arrays.toString(e.getStackTrace()));
             }
         }
     }
@@ -24,7 +29,8 @@ public class DbUtil {
             try {
                 statement.close();
             } catch (SQLException e) {
-                /*log or print or ignore*/
+                logger.error("Statement didn't close.");
+                logger.error(Arrays.toString(e.getStackTrace()));
             }
         }
     }
@@ -34,7 +40,8 @@ public class DbUtil {
             try {
                 resultSet.close();
             } catch (SQLException e) {
-                /*log or print or ignore*/
+                logger.error("Result Set didn't close.");
+                logger.error(Arrays.toString(e.getStackTrace()));
             }
         }
     }
