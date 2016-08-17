@@ -1,9 +1,7 @@
 package ua.hillel.tyshenko.carRental.data.service;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,8 +11,10 @@ import java.util.Properties;
  * Created by roman on 03.08.16.
  */
 public class ConnectionFactory {
-    // database properties initialization
-    public static final String PATH_TO_PROPERTIES ="/home/roman/git/CarRental/src/main/java/ua/hillel/tyshenko/carRental/data/service/db.properties" /*System.getProperty("user.dir") + ".git/src/main/java/ua/kiev/allexb/carrental/data/service/db.properties"*/;
+    static final Logger logger = ApplicationLogger.getLogger(ConnectionFactory.class);
+
+    // database properties file path
+    private static final String PATH_TO_PROPERTIES = getPathToProperties("db.properties");
     private static final Properties properties;
     static {
         InputStream inputStream;
@@ -22,54 +22,61 @@ public class ConnectionFactory {
         try {
             inputStream = new FileInputStream(PATH_TO_PROPERTIES);
             prop.load(inputStream);
+            logger.info("Connection Factory Property loaded.\n\t\tProperty file location: " + PATH_TO_PROPERTIES);
         } catch (FileNotFoundException e) {
+            logger.error("Property file \"dp.properties\" didn't found. Database main properties didn't initialize.");
             e.printStackTrace();
         } catch (IOException e) {
+            logger.error("IO exception during property file \"dp.properties\" loading. Database main properties didn't initialize.");
             e.printStackTrace();
         }
         properties = prop;
     }
 
-    //static reference to itself
+    private static String getPathToProperties(String fileName) {
+        String path =  ConnectionFactory.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String fullPath = "";
+        try {
+            fullPath = URLDecoder.decode(path, "UTF-8");
+            String[] pathArr = fullPath.split("/WEB-INF/classes/");
+            fullPath = pathArr[0];
+        } catch (UnsupportedEncodingException ex) {
+            logger.warn("Property file path encoding exception.");
+        } catch (NullPointerException ex) {
+            logger.warn("\"/WEB-INF/classes/\" directory not found.");
+        }
+        return new File(fullPath).getPath() + "\\WEB-INF\\classes\\" + fileName;
+    }
+
     private static ConnectionFactory instance = new ConnectionFactory();
+    private BasicDataSource ds;
 
-    //created connection
-    private static Connection dbConnection = null;
-
-    //private constructor
     private ConnectionFactory() {
-        try {
-            String dbDriver = properties.isEmpty()? null: properties.getProperty("dbDriver");
-            Class.forName(dbDriver);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if (properties.isEmpty()){
+            logger.error("Property instance is empty. Database main properties didn't initialize. ConnectionFactory creation failed.");
+            throw new PropertyLoadException("ConnectionFactory creation failed. Property didn't load.");
+        }
+        ds = new BasicDataSource();
+        ds.setDriverClassName(properties.getProperty("dbDriver"));
+        ds.setUsername(properties.getProperty("userName"));
+        ds.setPassword(properties.getProperty("password"));
+        ds.setUrl(properties.getProperty("connectionUrl"));
+
+        ds.setMinIdle(Integer.parseInt(properties.getProperty("connection_pull.min_idle")));
+        ds.setMaxIdle(Integer.parseInt(properties.getProperty("connection_pull.max_idle")));
+        ds.setMaxOpenPreparedStatements(Integer.parseInt(properties.getProperty("connection_pull.max_open_prepared_statements")));
+    }
+
+    public static ConnectionFactory getInstance() {
+        if (instance == null) {
+            instance = new ConnectionFactory();
+            return instance;
+        } else {
+            return instance;
         }
     }
 
-    private Connection createConnection() {
-        Connection connection = null;
-        try {
-            if (properties.isEmpty()) {
-                System.out.println("ERROR: Database properties could not load..");
-            } else {
-                String connectionUrl = properties.getProperty("connectionUrl");
-                String userName = properties.getProperty("userName");
-                String password = properties.getProperty("password");
-                connection = DriverManager.getConnection(connectionUrl, userName, password);
-            }
-        } catch (SQLException e) {
-            System.out.println("ERROR: Unable to Connect to Database.");
-        }
-        return connection;
-    }
-
-    public static Connection getConnection() {
-        try {
-            if (dbConnection == null || dbConnection.isClosed())
-                dbConnection = instance.createConnection();
-        } catch (SQLException e) {
-            System.out.println("ERROR: Unable to Connect to Database.");
-        }
-        return dbConnection;
+    public Connection getConnection() throws SQLException {
+        return this.ds.getConnection();
     }
 }
