@@ -1,31 +1,37 @@
 package ua.hillel.tyshenko.carRental.model;
 
+import java.util.Date;
+
 /**
  * Created by roman on 29.07.16.
  */
 public class Client {
 
+    private long id;
     private String firstName;
-    private String secondName;
-    private int age;
-    private Long clientId;
+    private String lastName;
+    private Date birthday;
+    private int dLNumber;
+    private int lengthOfDrivingExperience;
 
-    public Client( String firstName, String secondName, int age, Long clientId) {
+    public Client() {
+    }
 
+    public Client(long id, String firstName, String lastName, Date birthday, int dLNumber, int lengthOfDrivingExperience) {
+        this.id = id;
         this.firstName = firstName;
-        this.secondName = secondName;
-        this.age = age;
-        this.clientId = clientId;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.dLNumber = dLNumber;
+        this.lengthOfDrivingExperience = lengthOfDrivingExperience;
     }
 
-
-
-    public Long getClientId() {
-        return clientId;
+    public long getId() {
+        return id;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -36,38 +42,58 @@ public class Client {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public int getdLNumber() {
+        return dLNumber;
+    }
+
+    public void setdLNumber(int dLNumber) {
+        this.dLNumber = dLNumber;
+    }
+
+    public int getLengthOfDrivingExperience() {
+        return lengthOfDrivingExperience;
+    }
+
+    public void setLengthOfDrivingExperience(int lengthOfDrivingExperience) {
+        this.lengthOfDrivingExperience = lengthOfDrivingExperience;
     }
 
     @Override
     public int hashCode() {
-        int result = getFirstName() != null ? getFirstName().hashCode() : 0;
-        result = 31 * result + (getSecondName() != null ? getSecondName().hashCode() : 0);
-        result = 31 * result + getAge();
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + birthday.hashCode();
+        result = 31 * result + dLNumber;
+        result = 31 * result + lengthOfDrivingExperience;
         return result;
     }
 
     @Override
     public String toString() {
         return "Client{" +
-
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", age=" + age +
-                ", clientId=" + clientId +
+                ", lastName='" + lastName + '\'' +
+                ", birthday=" + birthday +
+                ", dLNumber=" + dLNumber +
+                ", lengthOfDrivingExperience=" + lengthOfDrivingExperience +
                 '}';
     }
 }
