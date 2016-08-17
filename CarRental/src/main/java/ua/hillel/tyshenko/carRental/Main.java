@@ -1,4 +1,4 @@
-package ua.hillel.tyshenko.carRental.data;
+package ua.hillel.tyshenko.carRental;
 
 import ua.hillel.tyshenko.carRental.data.dao.CarDAOImpl;
 import ua.hillel.tyshenko.carRental.data.domain.CarDomain;
