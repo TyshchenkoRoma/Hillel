@@ -1,8 +1,9 @@
 package ua.hillel.tyshenko.carRental.data.dao;
 
-import ua.hillel.tyshenko.carRental.data.domain.AdministratorDomain;
+import ua.hillel.tyshenko.carRental.data.domain.*;
 import ua.hillel.tyshenko.carRental.data.service.ConnectionFactory;
 import ua.hillel.tyshenko.carRental.data.service.DbUtil;
+import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ public class AdministratorDAOImpl implements AdministratorDAO {
 
     private List<AdministratorDomain> getItems(String query, int amount) {
         ResultSet resultSet = null;
-        List<AdministratorDomain> clients = new ArrayList<>();
+        List<AdministratorDomain> clients = new ArrayList<AdministratorDomain>();
         try {
             try {
                 connection = ConnectionFactory.getInstance().getConnection();

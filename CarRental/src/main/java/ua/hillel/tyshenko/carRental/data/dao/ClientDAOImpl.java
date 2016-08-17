@@ -4,6 +4,8 @@ import ua.hillel.tyshenko.carRental.data.domain.ClientDomain;
 import ua.hillel.tyshenko.carRental.data.service.ConnectionFactory;
 import ua.hillel.tyshenko.carRental.data.service.DbUtil;
 import ua.hillel.tyshenko.carRental.data.dao.util.DateUtil;
+import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,7 +29,7 @@ public class ClientDAOImpl implements ClientDAO {
 
     private List<ClientDomain> getItems(String query, int amount) {
         ResultSet resultSet = null;
-        List<ClientDomain> clients = new ArrayList<>();
+        List<ClientDomain> clients = new ArrayList<ClientDomain>();
         try {
 
             try {
