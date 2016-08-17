@@ -3,6 +3,7 @@ package ua.hillel.tyshenko.carRental.data.dao;
 import ua.hillel.tyshenko.carRental.data.domain.ClientDomain;
 import ua.hillel.tyshenko.carRental.data.service.ConnectionFactory;
 import ua.hillel.tyshenko.carRental.data.service.DbUtil;
+import ua.hillel.tyshenko.carRental.data.dao.util.DateUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
