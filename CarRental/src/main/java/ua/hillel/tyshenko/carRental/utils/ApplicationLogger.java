@@ -1,5 +1,7 @@
 package ua.hillel.tyshenko.carRental.utils;
 
+import org.apache.log4j.PropertyConfigurator;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

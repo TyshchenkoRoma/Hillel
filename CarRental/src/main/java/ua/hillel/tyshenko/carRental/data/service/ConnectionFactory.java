@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
+import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
+
 /**
  * Created by roman on 03.08.16.
  */
