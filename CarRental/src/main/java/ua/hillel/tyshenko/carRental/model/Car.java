@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class Car {
 
     private String carModel;
-    private Colour Colour;
+    private Colour colour;
     private String description;
     private int yearOfManufacture;
     private BigDecimal rentPrice;
@@ -21,7 +21,7 @@ public class Car {
     public Car(BigDecimal rentPrice, String carModel, Car.Colour colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
         this.rentPrice = rentPrice;
         this.carModel = carModel;
-        Colour = colour;
+        this.colour = colour;
         this.description = description;
         this.yearOfManufacture = yearOfManufacture;
         this.carId = carId;
@@ -45,11 +45,11 @@ public class Car {
     }
 
     public Colour getColour() {
-        return Colour;
+        return colour;
     }
 
     public void setCarColour(Colour carColour) {
-        this.Colour = carColour;
+        this.colour = carColour;
     }
 
     public String getDescription() {
@@ -102,7 +102,7 @@ public class Car {
     public String toString() {
         return "Car{" +
                 "carModel='" + carModel + '\'' +
-                ", carColour=" + Colour +
+                ", carColour=" + colour +
                 ", description='" + description + '\'' +
                 ", yearOfManufacture=" + yearOfManufacture +
                 ", rentPrice=" + rentPrice +
