@@ -107,7 +107,7 @@ public class Car {
                 ", yearOfManufacture=" + yearOfManufacture +
                 ", rentPrice=" + rentPrice +
                 ", carId=" + carId +
-                ", isRented=" + isRented +
+                ", isRented=" + isRented + "+" +
                 '}';
     }
 
