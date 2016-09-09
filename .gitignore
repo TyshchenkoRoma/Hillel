@@ -9,6 +9,8 @@ target
 /target/
 target/*
 /terget/*
+CarRental/target/*
+CarRental/target/
 
 out
 
