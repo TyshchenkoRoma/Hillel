@@ -1,13 +1,8 @@
 package ua.hillel.tyshenko.carRental;
 
-import ua.hillel.tyshenko.carRental.data.dao.CarDAOImpl;
-import ua.hillel.tyshenko.carRental.data.domain.CarDomain;
 import ua.hillel.tyshenko.carRental.model.Car;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by roman on 03.08.16.
@@ -23,25 +18,25 @@ public class Main {
         car.setYearOfManufacture(2012);
         car.setRentPrice(new BigDecimal(2000d));
         car.setDescription("Very fast car! Input car");
-        car.setRented(true);
+        car.setIsRented(true);
 
           System.out.println(car);
 
-        CarDAOImpl carDAO = new CarDAOImpl();
-        Car carFromDB = carDAO.getById(2L).getCar();
-
-        List<Car> cars = new ArrayList<Car>();
-        for (CarDomain domain : carDAO.getAll()) {
-            cars.add(domain.getCar());
-        }
-
-        System.out.println(carFromDB);
-        System.out.println("----");
-        System.out.println(Arrays.toString(cars.toArray()));
-
-        carFromDB = carDAO.getByModel("Ford").getCar();
-
-        System.out.println(carFromDB);
+//        CarDAOImpl carDAO = new CarDAOImpl();
+//        Car carFromDB = carDAO.getById(2L).getCar();
+//
+//        List<Car> cars = new ArrayList<Car>();
+//        for (CarDomain domain : carDAO.getAll()) {
+//            cars.add(domain.getCar());
+//        }
+//
+//        System.out.println(carFromDB);
+//        System.out.println("----");
+//        System.out.println(Arrays.toString(cars.toArray()));
+//
+//        carFromDB = carDAO.getByModel("Ford").getCar();
+//
+//        System.out.println(carFromDB);
     }
 }
 

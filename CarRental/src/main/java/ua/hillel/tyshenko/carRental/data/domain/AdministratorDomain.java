@@ -1,5 +1,7 @@
 package ua.hillel.tyshenko.carRental.data.domain;
 
+import ua.hillel.tyshenko.carRental.model.Administrator;
+
 /**
  * Created by roman on 15.08.16.
  */
@@ -12,6 +14,9 @@ public class AdministratorDomain extends AbstractDomain {
 
     public AdministratorDomain() {
     }
+    public AdministratorDomain(Administrator administrator) {
+        this.setAdministrator(administrator);
+    }
 
     public AdministratorDomain(Long id, String firstName, String lastName, String email, String login, String password) {
         super(id);
@@ -21,8 +26,16 @@ public class AdministratorDomain extends AbstractDomain {
         this.login = login;
         this.password = password;
     }
-    public  AdministratorDomain (AbstractDomain abstractDomain) {
-
+    public Administrator getAdministrator() {
+        return new Administrator(this.getId(), this.firstName, this.lastName, this.email, this.login, this.password);
+    }
+    public void setAdministrator(Administrator administrator) {
+        super.setId(administrator.getId());
+        this.firstName = administrator.getFirstName();
+        this.lastName = administrator.getLastName();
+        this.email = administrator.getEmail();
+        this.login = administrator.getLogin();
+        this.password = administrator.getPassword();
     }
 
     public String getFirstName() {

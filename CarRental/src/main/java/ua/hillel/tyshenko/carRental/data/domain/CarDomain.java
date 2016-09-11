@@ -33,7 +33,7 @@ public class CarDomain extends AbstractDomain {
         car.setDescription(this.description);
         car.setYearOfManufacture(this.yearOfManufacture);
         car.setRentPrice(this.rentalPrice);
-        car.setRented(this.rented);
+        car.setIsRented(this.rented);
         return car;
     }
 

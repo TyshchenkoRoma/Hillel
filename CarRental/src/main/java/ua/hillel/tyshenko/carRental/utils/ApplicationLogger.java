@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * Created by roman on 17.08.16.
  */
 public class ApplicationLogger {
-    private static final String LOGGER_PROPERTY_FILE = getRootApplicationPath("\\WEB-INF\\classes\\log4j.properties");
+    private static final String LOGGER_PROPERTY_FILE = getRootApplicationPath("/WEB-INF/classes/log4j.properties");
     private static boolean init = false;
 
     public static org.apache.log4j.Logger getLogger(Class clazz) {

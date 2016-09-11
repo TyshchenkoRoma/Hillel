@@ -18,7 +18,7 @@ public class ConnectionFactory {
     static final Logger logger = ApplicationLogger.getLogger(ConnectionFactory.class);
 
     // database properties file path
-    private static final String PATH_TO_PROPERTIES = getPathToProperties("ua/hillel/tyshenko/carRental/data/service/db.properties");
+    private static final String PATH_TO_PROPERTIES = getPathToProperties("db.properties");
     private static final Properties properties;
     static {
         InputStream inputStream;
@@ -49,7 +49,7 @@ public class ConnectionFactory {
         } catch (NullPointerException ex) {
             logger.warn("\"/WEB-INF/classes/\" directory not found.");
         }
-        return new File(fullPath).getPath() + "\\WEB-INF\\classes\\" + fileName;
+        return new File(fullPath).getPath() + "/WEB-INF/classes/" + fileName;
     }
 
     private static ConnectionFactory instance = new ConnectionFactory();

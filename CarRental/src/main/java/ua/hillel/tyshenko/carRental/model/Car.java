@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 public class Car {
 
     private String carModel;
-    private String numberPlate;
-    private Color colour;
+    private Colour colour;
     private String description;
     private int yearOfManufacture;
     private BigDecimal rentPrice;
@@ -19,9 +18,8 @@ public class Car {
     public Car() {
     }
 
-    public Car(BigDecimal rentPrice,   String numberPlate, String carModel, Car.Color colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
+    public Car(BigDecimal rentPrice, String carModel, Car.Colour colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
         this.rentPrice = rentPrice;
-        this.numberPlate = numberPlate;
         this.carModel = carModel;
         this.colour = colour;
         this.description = description;
@@ -30,19 +28,11 @@ public class Car {
         this.isRented = isRented;
     }
 
-    public String getNumberPlate() {
-        return numberPlate;
-    }
-
-    public void setNumberPlate(String numberPlate) {
-        this.numberPlate = numberPlate;
-    }
-
-    public boolean isRented() {
+    public boolean isIsRented() {
         return isRented;
     }
 
-    public void setRented(boolean rented) {
+    public void setIsRented(boolean rented) {
         isRented = rented;
     }
 
@@ -54,11 +44,11 @@ public class Car {
         this.rentPrice = rentPrice;
     }
 
-    public Color getColour() {
+    public Colour getColour() {
         return colour;
     }
 
-    public void setCarColour(Color carColour) {
+    public void setCarColour(Colour carColour) {
         this.colour = carColour;
     }
 
@@ -95,49 +85,32 @@ public class Car {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Car car = (Car) o;
-
-        if (carId != car.carId) return false;
-        if (yearOfManufacture != car.yearOfManufacture) return false;
-        if (isRented != car.isRented) return false;
-        if (!numberPlate.equals(car.numberPlate)) return false;
-        if (carModel != null ? !carModel.equals(car.carModel) : car.carModel != null) return false;
-        if (colour != car.colour) return false;
-        if (description != null ? !description.equals(car.description) : car.description != null) return false;
-        return !(rentPrice != null ? !rentPrice.equals(car.rentPrice) : car.rentPrice != null);
-    }
 
     @Override
     public int hashCode() {
-        int result = (int) (carId ^ (carId >>> 32));
-        result = 31 * result + numberPlate.hashCode();
-        result = 31 * result + (carModel != null ? carModel.hashCode() : 0);
-        result = 31 * result + (colour != null ? colour.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + yearOfManufacture;
-        result = 31 * result + (rentPrice != null ? rentPrice.hashCode() : 0);
-        result = 31 * result + (isRented ? 1 : 0);
+        int result = getCarModel() != null ? getCarModel().hashCode() : 0;
+        result = 31 * result + getCarId().hashCode();
+        result = 31 * result + (getColour() != null ? getColour().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + getYearOfManufacture();
+        result = 31 * result + getRentPrice().hashCode();
+        result = 31 * result + (isIsRented() ? 1 : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Car{" +
-                "id=" + carId +
-                ", numberPlate='" + numberPlate + '\'' +
-                ", model='" + carModel + '\'' +
-                ", color=" + colour +
+                "carModel='" + carModel + '\'' +
+                ", carColour=" + colour +
                 ", description='" + description + '\'' +
                 ", yearOfManufacture=" + yearOfManufacture +
-                ", rentalPrice=" + rentPrice +
-                ", rented=" + isRented +
+                ", rentPrice=" + rentPrice +
+                ", carId=" + carId +
+                ", isIsRented=" + isRented + "+" +
                 '}';
     }
 
-    public enum Color {NAN, WHITE, BLACK, GREY, RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, PINK, BROWN, GOLD, SILVER, BRONZE}
+    public enum Colour {WHITE, BLACK, RED, GREEN, YELLOW, BLUE};
 }
+

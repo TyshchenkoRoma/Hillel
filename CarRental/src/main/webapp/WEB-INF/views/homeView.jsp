@@ -9,6 +9,9 @@
 </head>
 <body>
 
+<jsp:include page="_header.jsp"></jsp:include>
+<jsp:include page="_menu.jsp"></jsp:include>
+
 <h3>Home Page</h3>
 
 This is Car Rental Service web application for car renting administration. <br><br>
@@ -28,6 +31,8 @@ This is Car Rental Service web application for car renting administration. <br><
   <li>Closing order after retuning the car with forming bill for the service</li>
   <li>Storing information about all company orders in application database</li>
 </ul>
+
+<jsp:include page="_footer.jsp"></jsp:include>
 
 </body>
 </html>
