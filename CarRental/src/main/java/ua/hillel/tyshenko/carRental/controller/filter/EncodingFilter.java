@@ -1,4 +1,4 @@
-package ua.hillel.tyshenko.carRental.filter;
+package ua.hillel.tyshenko.carRental.controller.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

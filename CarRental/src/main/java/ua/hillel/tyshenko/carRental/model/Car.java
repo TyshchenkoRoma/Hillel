@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 public class Car {
 
     private String carModel;
-    private Colour colour;
+    private String numberPlate;
+    private Color colour;
     private String description;
     private int yearOfManufacture;
     private BigDecimal rentPrice;
@@ -18,14 +19,23 @@ public class Car {
     public Car() {
     }
 
-    public Car(BigDecimal rentPrice, String carModel, Car.Colour colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
+    public Car( String numberPlate, BigDecimal rentPrice, String carModel, Car.Color color, String description, int yearOfManufacture, Long carId, boolean isRented) {
         this.rentPrice = rentPrice;
         this.carModel = carModel;
-        this.colour = colour;
+        this.numberPlate = numberPlate;
+        this.colour = color;
         this.description = description;
         this.yearOfManufacture = yearOfManufacture;
         this.carId = carId;
         this.isRented = isRented;
+    }
+
+    public String getNumberPlate() {
+        return numberPlate;
+    }
+
+    public void setNumberPlate(String numberPlate) {
+        this.numberPlate = numberPlate;
     }
 
     public boolean isIsRented() {
@@ -44,11 +54,11 @@ public class Car {
         this.rentPrice = rentPrice;
     }
 
-    public Colour getColour() {
+    public Color getColour() {
         return colour;
     }
 
-    public void setCarColour(Colour carColour) {
+    public void setCarColour(Color carColour) {
         this.colour = carColour;
     }
 
@@ -88,13 +98,14 @@ public class Car {
 
     @Override
     public int hashCode() {
-        int result = getCarModel() != null ? getCarModel().hashCode() : 0;
-        result = 31 * result + getCarId().hashCode();
-        result = 31 * result + (getColour() != null ? getColour().hashCode() : 0);
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + getYearOfManufacture();
-        result = 31 * result + getRentPrice().hashCode();
-        result = 31 * result + (isIsRented() ? 1 : 0);
+        int result = (int) (carId ^ (carId >>> 32));
+        result = 31 * result + numberPlate.hashCode();
+        result = 31 * result + (carModel != null ? carModel.hashCode() : 0);
+        result = 31 * result + (colour != null ? colour.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + yearOfManufacture;
+        result = 31 * result + (rentPrice != null ? rentPrice.hashCode() : 0);
+        result = 31 * result + (isRented ? 1 : 0);
         return result;
     }
 
@@ -102,7 +113,8 @@ public class Car {
     public String toString() {
         return "Car{" +
                 "carModel='" + carModel + '\'' +
-                ", carColour=" + colour +
+                "numberPlate" + numberPlate + '\'' +
+                ", carColor=" + colour +
                 ", description='" + description + '\'' +
                 ", yearOfManufacture=" + yearOfManufacture +
                 ", rentPrice=" + rentPrice +
@@ -111,6 +123,6 @@ public class Car {
                 '}';
     }
 
-    public enum Colour {WHITE, BLACK, RED, GREEN, YELLOW, BLUE};
+    public enum Colour {NAN, WHITE, BLACK, GREY, RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, PINK, BROWN, GOLD, SILVER, BRONZE}
 }
 

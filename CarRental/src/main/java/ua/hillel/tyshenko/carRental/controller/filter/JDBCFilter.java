@@ -1,4 +1,4 @@
-package ua.hillel.tyshenko.carRental.filter;
+package ua.hillel.tyshenko.carRental.controller.filter;
 
 import org.apache.log4j.Logger;
 import ua.hillel.tyshenko.carRental.data.service.DataBaseUtil;
