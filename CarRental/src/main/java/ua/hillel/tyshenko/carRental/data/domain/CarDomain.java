@@ -8,6 +8,7 @@ import java.math.BigDecimal;
  * Created by roman on 03.08.16.
  */
 public class CarDomain extends AbstractDomain {
+    private String numberPlate;
     private String model;
     private Car.Colour colour;
     private String description;
@@ -15,8 +16,9 @@ public class CarDomain extends AbstractDomain {
     private BigDecimal rentalPrice;
     private boolean rented;
 
-    public CarDomain(Long id, String model, Car.Colour colour, String description, int yearOfManufacture, BigDecimal rentalPrice, boolean rented) {
+    public CarDomain( String numberPlate, Long id, String model, Car.Colour colour, String description, int yearOfManufacture, BigDecimal rentalPrice, boolean rented) {
         super(id);
+        this.numberPlate = numberPlate;
         this.model = model;
         this.colour = colour;
         this.description = description;
@@ -24,17 +26,9 @@ public class CarDomain extends AbstractDomain {
         this.rentalPrice = rentalPrice;
         this.rented = rented;
     }
-
     public Car getCar() {
-        Car car = new Car();
-        car.setCarId(this.getId());
-        car.setCarModel(this.model);
-        car.setCarColour(this.colour);
-        car.setDescription(this.description);
-        car.setYearOfManufacture(this.yearOfManufacture);
-        car.setRentPrice(this.rentalPrice);
-        car.setIsRented(this.rented);
-        return car;
+        return new Car(this.numberPlate, this.rentalPrice,   this.model, this.colour,   this.description, this.yearOfManufacture, this.getId(),
+                 this.rented);
     }
 
     public String getModel() {

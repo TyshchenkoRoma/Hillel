@@ -9,7 +9,7 @@ public class Car {
 
     private String carModel;
     private String numberPlate;
-    private Color colour;
+    private Colour colour;
     private String description;
     private int yearOfManufacture;
     private BigDecimal rentPrice;
@@ -19,11 +19,11 @@ public class Car {
     public Car() {
     }
 
-    public Car( String numberPlate, BigDecimal rentPrice, String carModel, Car.Color color, String description, int yearOfManufacture, Long carId, boolean isRented) {
+    public Car( String numberPlate, BigDecimal rentPrice, String carModel, Car.Colour colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
         this.rentPrice = rentPrice;
         this.carModel = carModel;
         this.numberPlate = numberPlate;
-        this.colour = color;
+        this.colour = colour;
         this.description = description;
         this.yearOfManufacture = yearOfManufacture;
         this.carId = carId;
@@ -54,11 +54,11 @@ public class Car {
         this.rentPrice = rentPrice;
     }
 
-    public Color getColour() {
+    public Colour getColour() {
         return colour;
     }
 
-    public void setCarColour(Color carColour) {
+    public void setCarColour(Colour carColour) {
         this.colour = carColour;
     }
 
