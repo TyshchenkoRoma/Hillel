@@ -30,7 +30,7 @@ public class CarValidator extends Validator <Car> {
     @Override
     public boolean validate() {
         boolean error = false;
-        logger.info("Car with ID:" + car.getCarId() + " prepared to validator.");
+        logger.info("Car with ID:" + car.getId() + " prepared to validator.");
         String numberPlate = request.getParameter("numberPlate") != null ? request.getParameter(" number Plate") : "";
         car.setNumberPlate(numberPlate);
         if (numberPlate.isEmpty()) {
@@ -38,10 +38,10 @@ public class CarValidator extends Validator <Car> {
             error = true;
         }
         String model = request.getParameter("carModel") != null ? request.getParameter("carModel") : "";
-        car.setCarModel(model);
+        car.setModel(model);
         try {
             ua.hillel.tyshenko.carRental.model.Car.Color color = request.getParameter("color") != null &&!request.getParameter("color").isEmpty() ? ua.hillel.tyshenko.carRental.model.Car.Color.valueOf(request.getParameter("color")) : Car.Color.NAN;
-        car.setCarColour(color);
+        car.setColor(color);
         } catch (IllegalArgumentException ex) {
             message += "Choose correct color. ";
             error = true;
@@ -59,14 +59,14 @@ public class CarValidator extends Validator <Car> {
         }
         try {
             BigDecimal rentalPrice = request.getParameter("rentalPrice") != null && !request.getParameter("rentalPrice").isEmpty() ? BigDecimal.valueOf(Double.valueOf(request.getParameter("rentalPrice"))) : BigDecimal.ZERO;
-            car.setRentPrice(rentalPrice);
+            car.setRentalPrice(rentalPrice);
         } catch (IllegalArgumentException ex) {
             message += "Set correct rental price. ";
             error = true;
             logger.warn(ex);
         }
         boolean rented = Boolean.valueOf(request.getParameter("rented"));
-        car.setIsRented(rented);
+        car.setRented(rented);
         logger.info("Data validation completed.");
         return !error;
 

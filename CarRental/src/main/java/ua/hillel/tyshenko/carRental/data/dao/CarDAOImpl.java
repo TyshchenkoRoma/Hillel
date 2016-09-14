@@ -72,6 +72,12 @@ public class CarDAOImpl implements CarDAO {
         List<CarDomain> cars = getItems(query, ONE);
         return cars.isEmpty() ? null : cars.get(0);
     }
+    @Override
+    public CarDomain getByNumberPlate(String numberPlate) throws SQLException {
+        String query = "SELECT * FROM car_tb WHERE number_plate='" + numberPlate + "'";
+        List<CarDomain> cars = getItems(query, ONE);
+        return cars.isEmpty() ? null : cars.get(0);
+    }
 
     public List<CarDomain> getAll() throws SQLException {
         String query = "SELECT * FROM car_tb";

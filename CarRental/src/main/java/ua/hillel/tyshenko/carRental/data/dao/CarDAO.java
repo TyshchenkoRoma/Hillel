@@ -10,4 +10,5 @@ import java.sql.SQLException;
 public interface CarDAO  extends AbstractDAO<CarDomain> {
 
     CarDomain getByModel(String model) throws SQLException;
+    CarDomain getByNumberPlate(String numberPlate) throws SQLException;
 }

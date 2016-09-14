@@ -7,27 +7,35 @@ import java.math.BigDecimal;
  */
 public class Car {
 
-    private String carModel;
+    private long id;
     private String numberPlate;
+    private String model;
     private Color color;
     private String description;
     private int yearOfManufacture;
-    private BigDecimal rentPrice;
-    private Long carId;
-    private boolean isRented;
+    private BigDecimal rentalPrice;
+    private boolean rented;
 
     public Car() {
     }
 
-    public Car( String numberPlate, BigDecimal rentPrice, String carModel, Car.Color colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
-        this.rentPrice = rentPrice;
-        this.carModel = carModel;
+    public Car(long id, String numberPlate, String model, Color color, String description, int yearOfManufacture, BigDecimal rentalPrice, boolean rented) {
+        this.id = id;
         this.numberPlate = numberPlate;
-        this.color = colour;
+        this.model = model;
+        this.color = color;
         this.description = description;
         this.yearOfManufacture = yearOfManufacture;
-        this.carId = carId;
-        this.isRented = isRented;
+        this.rentalPrice = rentalPrice;
+        this.rented = rented;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNumberPlate() {
@@ -38,28 +46,20 @@ public class Car {
         this.numberPlate = numberPlate;
     }
 
-    public boolean isIsRented() {
-        return isRented;
+    public String getModel() {
+        return model;
     }
 
-    public void setIsRented(boolean rented) {
-        isRented = rented;
+    public void setModel(String model) {
+        this.model = model;
     }
 
-    public BigDecimal getRentPrice() {
-        return rentPrice;
-    }
-
-    public void setRentPrice(BigDecimal rentPrice) {
-        this.rentPrice = rentPrice;
-    }
-
-    public Color getColour() {
+    public Color getColor() {
         return color;
     }
 
-    public void setCarColour(Color carColour) {
-        this.color = carColour;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public String getDescription() {
@@ -74,55 +74,69 @@ public class Car {
         return yearOfManufacture;
     }
 
-    public void setYearOfManufacture(int yearOfIssue) {
-        this.yearOfManufacture = yearOfIssue;
+    public void setYearOfManufacture(int yearOfManufacture) {
+        this.yearOfManufacture = yearOfManufacture;
     }
 
-    public String getCarModel() {
-        return carModel;
+    public BigDecimal getRentalPrice() {
+        return rentalPrice;
     }
 
-    public void setCarModel(String carName) {
-        this.carModel = carName;
+    public void setRentalPrice(BigDecimal rentalPrice) {
+        this.rentalPrice = rentalPrice;
     }
 
-    public Long getCarId() {
-        return carId;
+    public boolean isRented() {
+        return rented;
     }
 
-    public void setCarId(Long carId) {
-        this.carId = carId;
+    public void setRented(boolean rented) {
+        this.rented = rented;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Car car = (Car) o;
+
+        if (id != car.id) return false;
+        if (yearOfManufacture != car.yearOfManufacture) return false;
+        if (rented != car.rented) return false;
+        if (!numberPlate.equals(car.numberPlate)) return false;
+        if (model != null ? !model.equals(car.model) : car.model != null) return false;
+        if (color != car.color) return false;
+        if (description != null ? !description.equals(car.description) : car.description != null) return false;
+        return !(rentalPrice != null ? !rentalPrice.equals(car.rentalPrice) : car.rentalPrice != null);
+    }
 
     @Override
     public int hashCode() {
-        int result = (int) (carId ^ (carId >>> 32));
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + numberPlate.hashCode();
-        result = 31 * result + (carModel != null ? carModel.hashCode() : 0);
+        result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + yearOfManufacture;
-        result = 31 * result + (rentPrice != null ? rentPrice.hashCode() : 0);
-        result = 31 * result + (isRented ? 1 : 0);
+        result = 31 * result + (rentalPrice != null ? rentalPrice.hashCode() : 0);
+        result = 31 * result + (rented ? 1 : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Car{" +
-                "carModel='" + carModel + '\'' +
-                "numberPlate" + numberPlate + '\'' +
-                ", carColor=" + color +
+                "id=" + id +
+                ", numberPlate='" + numberPlate + '\'' +
+                ", model='" + model + '\'' +
+                ", color=" + color +
                 ", description='" + description + '\'' +
                 ", yearOfManufacture=" + yearOfManufacture +
-                ", rentPrice=" + rentPrice +
-                ", carId=" + carId +
-                ", isIsRented=" + isRented + "+" +
+                ", rentalPrice=" + rentalPrice +
+                ", rented=" + rented +
                 '}';
     }
 
     public enum Color {NAN, WHITE, BLACK, GREY, RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, PINK, BROWN, GOLD, SILVER, BRONZE}
 }
-
