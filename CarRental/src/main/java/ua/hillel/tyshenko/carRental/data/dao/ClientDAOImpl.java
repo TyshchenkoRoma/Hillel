@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import ua.hillel.tyshenko.carRental.data.domain.ClientDomain;
 import ua.hillel.tyshenko.carRental.data.service.ConnectionFactory;
-import ua.hillel.tyshenko.carRental.data.service.DbUtil;
+//import ua.hillel.tyshenko.carRental.data.service.DbUtil;
 import ua.hillel.tyshenko.carRental.data.dao.util.DateUtil;
 import ua.hillel.tyshenko.carRental.data.service.DataBaseUtil;
 import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;

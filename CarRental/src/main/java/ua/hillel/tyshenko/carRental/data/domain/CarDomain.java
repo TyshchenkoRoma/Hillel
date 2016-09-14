@@ -16,6 +16,10 @@ public class CarDomain extends AbstractDomain {
     private BigDecimal rentalPrice;
     private boolean rented;
 
+    public CarDomain(Car car) {
+        this.setCar(car);
+    }
+
     public CarDomain( long id , String numberPlate, String model, Car.Color colour, String description, int yearOfManufacture, BigDecimal rentalPrice, boolean rented) {
         super(id);
         this.numberPlate = numberPlate;

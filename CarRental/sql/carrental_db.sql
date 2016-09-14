@@ -58,5 +58,3 @@ INSERT INTO administrator_tb(first_name, last_name, email, login, password) VALU
 SELECT * FROM `car_tb`;
 SELECT id, first_name, last_name, DATE_FORMAT(birthday, '%d-%m-%Y'), dl_number, length_of_driving_experience FROM `client_tb`;
 SELECT * FROM `administrator_tb`;
-
-SELECT * FROM `administrator_tb`;

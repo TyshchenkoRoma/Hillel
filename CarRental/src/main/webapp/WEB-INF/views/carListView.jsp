@@ -29,11 +29,11 @@
     <%! Integer counter = 0; %>
     <c:forEach items="${carList}" var="car">
         <% if (counter%2 == 0) {%><tr class="even"><%} else {%><tr><%}%>
-        <td>${car.carModel}</td>
-        <td>${car.colour}</td>
+        <td>${car.model}</td>
+        <td>${car.color}</td>
         <td>${car.yearOfManufacture}</td>
-        <td>${car.rentPrice}</td>
-        <td><input type="checkbox" <c:if test="${car.isRented}"> checked="checked" </c:if> onclick="return false;"/></td>
+        <td>${car.rentalPrice}</td>
+        <td><input type="checkbox" <c:if test="${car.rented}"> checked="checked" </c:if> onclick="return false;"/></td>
         <td>${car.description}</td>
     </tr>
         <% counter++; %>
