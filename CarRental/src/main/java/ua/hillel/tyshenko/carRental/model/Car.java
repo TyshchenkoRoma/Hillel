@@ -9,7 +9,7 @@ public class Car {
 
     private String carModel;
     private String numberPlate;
-    private Colour colour;
+    private Color color;
     private String description;
     private int yearOfManufacture;
     private BigDecimal rentPrice;
@@ -19,11 +19,11 @@ public class Car {
     public Car() {
     }
 
-    public Car( String numberPlate, BigDecimal rentPrice, String carModel, Car.Colour colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
+    public Car( String numberPlate, BigDecimal rentPrice, String carModel, Car.Color colour, String description, int yearOfManufacture, Long carId, boolean isRented) {
         this.rentPrice = rentPrice;
         this.carModel = carModel;
         this.numberPlate = numberPlate;
-        this.colour = colour;
+        this.color = colour;
         this.description = description;
         this.yearOfManufacture = yearOfManufacture;
         this.carId = carId;
@@ -54,12 +54,12 @@ public class Car {
         this.rentPrice = rentPrice;
     }
 
-    public Colour getColour() {
-        return colour;
+    public Color getColour() {
+        return color;
     }
 
-    public void setCarColour(Colour carColour) {
-        this.colour = carColour;
+    public void setCarColour(Color carColour) {
+        this.color = carColour;
     }
 
     public String getDescription() {
@@ -101,7 +101,7 @@ public class Car {
         int result = (int) (carId ^ (carId >>> 32));
         result = 31 * result + numberPlate.hashCode();
         result = 31 * result + (carModel != null ? carModel.hashCode() : 0);
-        result = 31 * result + (colour != null ? colour.hashCode() : 0);
+        result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + yearOfManufacture;
         result = 31 * result + (rentPrice != null ? rentPrice.hashCode() : 0);
@@ -114,7 +114,7 @@ public class Car {
         return "Car{" +
                 "carModel='" + carModel + '\'' +
                 "numberPlate" + numberPlate + '\'' +
-                ", carColor=" + colour +
+                ", carColor=" + color +
                 ", description='" + description + '\'' +
                 ", yearOfManufacture=" + yearOfManufacture +
                 ", rentPrice=" + rentPrice +
@@ -123,6 +123,6 @@ public class Car {
                 '}';
     }
 
-    public enum Colour {NAN, WHITE, BLACK, GREY, RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, PINK, BROWN, GOLD, SILVER, BRONZE}
+    public enum Color {NAN, WHITE, BLACK, GREY, RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, PINK, BROWN, GOLD, SILVER, BRONZE}
 }
 

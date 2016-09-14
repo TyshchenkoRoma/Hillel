@@ -14,7 +14,7 @@ public class Main {
         Car car = new Car();
         car.setCarId((long) 1);
         car.setCarModel("Ferrari");
-        car.setCarColour(Car.Colour.BLACK);
+        car.setCarColour(Car.Color.BLACK);
         car.setYearOfManufacture(2012);
         car.setRentPrice(new BigDecimal(2000d));
         car.setDescription("Very fast car! Input car");

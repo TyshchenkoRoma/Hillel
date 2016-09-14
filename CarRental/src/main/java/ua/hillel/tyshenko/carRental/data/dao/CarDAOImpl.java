@@ -48,8 +48,9 @@ public class CarDAOImpl implements CarDAO {
             if (resultSet != null) {
                 for (int i = 0; i < amount & resultSet.next(); i++) {
                     CarDomain car = new CarDomain(resultSet.getLong("id"),
+                            resultSet.getString("number_plate"),
                             resultSet.getString("model"),
-                            Car.Colour.valueOf(resultSet.getString("color")),
+                            Car.Color.valueOf(resultSet.getString("color") == null ? "NAN" : resultSet.getString("color")),
                             resultSet.getString("description"),
                             resultSet.getInt("year_of_manufacture"),
                             resultSet.getBigDecimal("rental_price"),

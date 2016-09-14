@@ -10,25 +10,35 @@ import java.math.BigDecimal;
 public class CarDomain extends AbstractDomain {
     private String numberPlate;
     private String model;
-    private Car.Colour colour;
+    private Car.Color color;
     private String description;
     private int yearOfManufacture;
     private BigDecimal rentalPrice;
     private boolean rented;
 
-    public CarDomain( String numberPlate, Long id, String model, Car.Colour colour, String description, int yearOfManufacture, BigDecimal rentalPrice, boolean rented) {
+    public CarDomain( long id , String numberPlate, String model, Car.Color colour, String description, int yearOfManufacture, BigDecimal rentalPrice, boolean rented) {
         super(id);
         this.numberPlate = numberPlate;
         this.model = model;
-        this.colour = colour;
+        this.color = colour;
         this.description = description;
         this.yearOfManufacture = yearOfManufacture;
         this.rentalPrice = rentalPrice;
         this.rented = rented;
     }
     public Car getCar() {
-        return new Car(this.numberPlate, this.rentalPrice,   this.model, this.colour,   this.description, this.yearOfManufacture, this.getId(),
+        return new Car(this.numberPlate, this.rentalPrice,   this.model, this.color,   this.description, this.yearOfManufacture, this.getId(),
                  this.rented);
+    }
+    public void setCar(Car car) {
+        super.setId(car.getCarId());
+        this.numberPlate = car.getNumberPlate();
+        this.model = car.getCarModel();
+        this.color = car.getColour();
+        this.description = car.getDescription();
+        this.yearOfManufacture = car.getYearOfManufacture();
+        this.rentalPrice = car.getRentPrice();
+        this.rented = car.isIsRented();
     }
 
     public String getModel() {
@@ -39,12 +49,12 @@ public class CarDomain extends AbstractDomain {
         this.model = model;
     }
 
-    public Car.Colour getColour() {
-        return colour;
+    public Car.Color getColour() {
+        return color;
     }
 
-    public void setColour(Car.Colour colour) {
-        this.colour = colour;
+    public void setColour(Car.Color colour) {
+        this.color = colour;
     }
 
     public String getDescription() {
