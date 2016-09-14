@@ -1,10 +1,9 @@
-package ua.hillel.tyshenko.carRental.controller.validator;
+package ua.hillel.tyshenko.carRental.controller;
 
 import org.apache.log4j.Logger;
 import ua.hillel.tyshenko.carRental.data.dao.CarDAO;
 import ua.hillel.tyshenko.carRental.data.dao.CarDAOImpl;
 import ua.hillel.tyshenko.carRental.data.domain.CarDomain;
-import ua.hillel.tyshenko.carRental.model.Car;
 import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
 import ua.hillel.tyshenko.carRental.utils.StoreAndCookieUtil;
 
@@ -21,19 +20,18 @@ import java.sql.SQLException;
 /**
  * Created by roman on 14.09.16.
  */
-@WebServlet(urlPatterns = {"/car_list/edit"})
-public class EditCarServlet extends HttpServlet {
-    private static final long serialVersionUID = -6669657844128409978L;
+@WebServlet(urlPatterns = {"/car_list/delete"})
+public class DeleteCarServlet extends HttpServlet {
+    private static final long serialVersionUID = 5583615804009416532L;
+    static final Logger logger = ApplicationLogger.getLogger(DeleteCarServlet.class);
 
-    static final Logger logger = ApplicationLogger.getLogger(EditCarServlet.class);
-
-    public EditCarServlet() {
+    public DeleteCarServlet() {
         super();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.info("Car editing form.");
+        logger.info("Car deleting form.");
         if (request.getParameter("id") == null) {
             response.sendRedirect(request.getContextPath() + "/car_list");
             return;
@@ -46,7 +44,7 @@ public class EditCarServlet extends HttpServlet {
             if (car != null) {
                 logger.info("Car data entered correctly.");
                 request.setAttribute("car", car.getCar());
-                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/editCarView.jsp");
+                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/deleteCarView.jsp");
                 dispatcher.forward(request, response);
             } else {
                 request.setAttribute("errorString", "Car with ID:" + id + "does not exists.");
@@ -59,44 +57,36 @@ public class EditCarServlet extends HttpServlet {
             request.setAttribute("javax.servlet.error.status_code", 500);
             response.setStatus(500);
         }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.info("Car creation procedure started.");
+        logger.info("Car deletion procedure started.");
         if (request.getParameter("id") == null) {
             response.sendRedirect(request.getContextPath() + "/car_list");
             return;
         }
-        Car car = new Car();
-        car.setId(Long.valueOf(request.getParameter("id")));
-        Validator<Car> validator = new CarValidator(request, car);
-        if (validator.validate()) {
-            Connection connection = StoreAndCookieUtil.getStoredConnection(request);
-            try {
-                CarDAO carDAO = new CarDAOImpl(connection);
-                CarDomain controlCar = carDAO.getByNumberPlate(validator.getValue().getNumberPlate());
-                if (controlCar == null || controlCar.getId() == car.getId()) {
-                    logger.info("Car data entered correctly.");
-                    carDAO.update(new CarDomain(validator.getValue()));
-                } else {
-                    validator.addMessage("Car with number plate \"" + validator.getValue().getNumberPlate() + "\" already exists. It's ID: #" +
-                            controlCar.getId() + ".");
-                }
-                if (validator.getMessage().isEmpty()) {
-                    response.sendRedirect(request.getContextPath() + "/car_list");
-                    return;
-                }
-            } catch (SQLException ex) {
-                logger.warn("Data base exception.", ex);
-                request.setAttribute("javax.servlet.error.exception", ex);
-                request.setAttribute("javax.servlet.error.status_code", 500);
-                response.setStatus(500);
+        long id = Long.valueOf(request.getParameter("id"));
+        Connection connection = StoreAndCookieUtil.getStoredConnection(request);
+        try {
+            CarDAO carDAO = new CarDAOImpl(connection);
+            CarDomain controlCar = carDAO.getById(id);
+            if (controlCar != null) {
+                carDAO.remove(controlCar);
+                logger.info("Car deleted.");
+            } else {
+                String errorString = "Car with with ID:# " + id + " doesn't exist.";
+                request.setAttribute("errorString", errorString);
+                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/car_list");
+                dispatcher.forward(request, response);
             }
+        } catch (SQLException ex) {
+            logger.warn("Data base exception.", ex);
+            request.setAttribute("javax.servlet.error.exception", ex);
+            request.setAttribute("javax.servlet.error.status_code", 500);
+            response.setStatus(500);
         }
-        request.setAttribute("car", validator.getValue());
-        request.setAttribute("errorString", validator.getMessage());
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/editCarView.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/car_list");
     }
 }
