@@ -16,13 +16,12 @@ import java.io.IOException;
 @WebFilter(filterName = "accessFilter")
 public class AccessFilter implements Filter {
     static final Logger logger = ApplicationLogger.getLogger(AccessFilter.class);
+
     public AccessFilter() {
     }
 
     public void init(FilterConfig filterConfig) throws ServletException {
         logger.info("Access Filter initialized.");
-
-
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -33,7 +32,7 @@ public class AccessFilter implements Filter {
         if (loginedAdministrator == null) {
             logger.info("Request without authentication. Access denied.");
             String errorString;
-            if(httpRequest.getServletPath().endsWith("/logout")) {
+            if (httpRequest.getServletPath().endsWith("/logout")) {
                 errorString = "No logined administrator.";
             } else {
                 errorString = "Access denied! Login previously.";
@@ -49,7 +48,4 @@ public class AccessFilter implements Filter {
 
     public void destroy() {
     }
-
-
-
 }

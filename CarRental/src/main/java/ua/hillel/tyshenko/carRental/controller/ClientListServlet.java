@@ -34,8 +34,8 @@ public class ClientListServlet extends HttpServlet {
         super();
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Administrator loginedAdministrator = StoreAndCookieUtil.getLoginedAdministrator(request.getSession());
-        if (loginedAdministrator != null) {
+      //  Administrator loginedAdministrator = StoreAndCookieUtil.getLoginedAdministrator(request.getSession());
+      //  if (loginedAdministrator != null) {
             logger.info("Extracting of client list list from database.");
             List<Client> clientList = null;
             Connection connection = StoreAndCookieUtil.getStoredConnection(request);
@@ -52,12 +52,12 @@ public class ClientListServlet extends HttpServlet {
             request.setAttribute("clientList", clientList);
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/clientListView.jsp");
             dispatcher.forward(request, response);
-        } else {
+       /* } else {
             logger.info("Request without authentication. Access denied.");
             request.setAttribute("errorString", "Access denied! Login previously.");
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
             dispatcher.forward(request, response);
-        }
+        }*/
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
