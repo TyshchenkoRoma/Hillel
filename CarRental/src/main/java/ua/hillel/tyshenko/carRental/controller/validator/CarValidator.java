@@ -37,7 +37,7 @@ public class CarValidator extends Validator <Car> {
             message += "Car always must have number plate. Entered it, please. ";
             error = true;
         }
-        String model = request.getParameter("carModel") != null ? request.getParameter("carModel") : "";
+        String model = request.getParameter("model") != null ? request.getParameter("model") : "";
         car.setModel(model);
         try {
             ua.hillel.tyshenko.carRental.model.Car.Color color = request.getParameter("color") != null &&!request.getParameter("color").isEmpty() ? ua.hillel.tyshenko.carRental.model.Car.Color.valueOf(request.getParameter("color")) : Car.Color.NAN;
