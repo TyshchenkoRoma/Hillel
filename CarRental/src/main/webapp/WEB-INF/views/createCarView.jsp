@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="ua.hillel.tyshenko.carRental.model.Car" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="view" uri="http://allexb.kiev.ua/jsp/tlds/viewtags" %>
+<%@ taglib prefix="view" uri="http://jsp/tlds/viewtags" %>
 <!DOCTYPE html>
 <html>
 <head>
