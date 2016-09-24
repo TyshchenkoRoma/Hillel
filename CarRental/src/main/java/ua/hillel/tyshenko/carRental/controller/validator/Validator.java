@@ -6,21 +6,21 @@ import javax.servlet.http.HttpServletRequest;
  * Created by roman on 12.09.16.
  */
 public abstract class Validator<T> {
-    protected HttpServletRequest request;
-    protected String message = "";
+    protected T model;
+    protected StringBuffer errorMessage;
 
-    public Validator(HttpServletRequest request) {
-        this.request = request;
+    public Validator(T model) {
+        this.model = model;
     }
 
-    public String getMessage() {
-        return message;
+    public void setModel(T model) {
+        this.model = model;
     }
 
-    public void addMessage(String massage) {
-        this.message += massage;
+    public StringBuffer getErrorMessage() {
+        return errorMessage;
     }
 
-    public abstract boolean validate();
-    public abstract T getValue();
+    public abstract boolean isValid();
+
 }

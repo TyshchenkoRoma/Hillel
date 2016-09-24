@@ -1,80 +1,46 @@
 package ua.hillel.tyshenko.carRental.controller.validator;
 
+import org.apache.log4j.Logger;
 import ua.hillel.tyshenko.carRental.model.Car;
 import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Calendar;
 
 /**
  * Created by roman on 12.09.16.
  */
 public class CarValidator extends Validator <Car> {
+    static final Logger logger = ApplicationLogger.getLogger(CarValidator.class);
 
-    static final org.apache.log4j.Logger logger = ApplicationLogger.getLogger(CarValidator.class);
-    private Car car = new Car();
-
-    public CarValidator(HttpServletRequest request) {
-        super(request);
+    public CarValidator(Car car) {
+        super(car);
     }
-
-    public CarValidator(HttpServletRequest request, Car car) {
-        super(request);
-        this.car = car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
     @Override
-    public boolean validate() {
+    public boolean isValid() {
         boolean error = false;
-        logger.info("Car with ID:" + car.getId() + " prepared to validator.");
-        String numberPlate = request.getParameter("numberPlate") != null ? request.getParameter(" number Plate") : "";
-        car.setNumberPlate(numberPlate);
+        errorMessage = new StringBuffer();
+        logger.info("Car with ID:" + model.getId() + " prepared to validation.");
+        String numberPlate = model.getNumberPlate();
         if (numberPlate.isEmpty()) {
-            message += "Car always must have number plate. Entered it, please. ";
+            errorMessage.append("Car always must have number plate. Enter it, please.\n");
             error = true;
         }
-        String model = request.getParameter("model") != null ? request.getParameter("model") : "";
-        car.setModel(model);
-        try {
-            ua.hillel.tyshenko.carRental.model.Car.Color color = request.getParameter("color") != null &&!request.getParameter("color").isEmpty() ? ua.hillel.tyshenko.carRental.model.Car.Color.valueOf(request.getParameter("color")) : Car.Color.NAN;
-        car.setColor(color);
-        } catch (IllegalArgumentException ex) {
-            message += "Choose correct color. ";
+        int yearOfManufacture = model.getYearOfManufacture();
+        if (yearOfManufacture != 0 && (yearOfManufacture < 1900 || yearOfManufacture > Calendar.getInstance().get(Calendar.YEAR))) {
+            errorMessage.append("Set year of manufacture in the range between 1900 and ");
+            errorMessage.append(Calendar.getInstance().get(Calendar.YEAR));
+            errorMessage.append(".\n");
             error = true;
-            logger.warn(ex);
         }
-        String description = request.getParameter("description") != null ? request.getParameter("description") : "";
-        car.setDescription(description);
-        try {
-            int yearOfManufacture = request.getParameter("yearOfManufacture") != null && !request.getParameter("yearOfManufacture").isEmpty() ? Integer.valueOf(request.getParameter("yearOfManufacture")) : 0;
-            car.setYearOfManufacture(yearOfManufacture);
-        } catch (IllegalArgumentException ex) {
-            message += "Set correct year of manufacture. ";
+        BigDecimal rentalPrice = model.getRentalPrice();
+        if (rentalPrice.doubleValue() < 0d) {
+            errorMessage.append("Set into rental price positive value.\n");
             error = true;
-            logger.warn(ex);
         }
-        try {
-            BigDecimal rentalPrice = request.getParameter("rentalPrice") != null && !request.getParameter("rentalPrice").isEmpty() ? BigDecimal.valueOf(Double.valueOf(request.getParameter("rentalPrice"))) : BigDecimal.ZERO;
-            car.setRentalPrice(rentalPrice);
-        } catch (IllegalArgumentException ex) {
-            message += "Set correct rental price. ";
-            error = true;
-            logger.warn(ex);
-        }
-        boolean rented = Boolean.valueOf(request.getParameter("rented"));
-        car.setRented(rented);
         logger.info("Data validation completed.");
         return !error;
-
-
     }
 
-    @Override
-    public Car getValue() {
-        return car;
-    }
 }

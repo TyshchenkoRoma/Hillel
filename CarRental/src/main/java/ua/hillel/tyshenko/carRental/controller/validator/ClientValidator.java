@@ -1,75 +1,59 @@
 package ua.hillel.tyshenko.carRental.controller.validator;
 
+import org.apache.log4j.Logger;
 import ua.hillel.tyshenko.carRental.model.Client;
 import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
 
-import javax.servlet.http.HttpServletRequest;
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by roman on 21.09.16.
  */
 public class ClientValidator extends Validator<Client> {
+    static final Logger logger = ApplicationLogger.getLogger(ClientValidator.class);
 
-    static final org.apache.log4j.Logger logger = ApplicationLogger.getLogger(ClientValidator.class);
-
-    private Client client = new Client();
-
-    public ClientValidator(HttpServletRequest request) {
-        super(request);
-    }
-
-    public ClientValidator(HttpServletRequest request, Client client) {
-        super(request);
-        this.client = client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
+    public ClientValidator(Client client) {
+        super(client);
     }
 
     @Override
-    public boolean validate() {
+    public boolean isValid() {
         boolean error = false;
-        logger.info("Client with ID:" + client.getId() + " prepared to validator.");
-
-        String firstName = request.getParameter("firstName") != null ? request.getParameter("firstName") : "";
-        client.setFirstName(firstName);
-
-        String lastName = request.getParameter("lastName") != null ? request.getParameter("lastName") : "";
-        client.setFirstName(lastName);
-
-        try {
-            Date birthday = request.getParameter("birthday") != null && !request.getParameter("birthday").isEmpty() ? request.getParameter("birthday") : 0;
-            client.setBirthday(birthday);
-        } catch (IllegalArgumentException ex) {
-            message += "Set correct birthday. ";
+        errorMessage = new StringBuffer();
+        logger.info("Client with ID:" + model.getId() + " prepared to validation.");
+        String firstName = model.getFirstName();
+        String lastName = model.getLastName();
+        if (firstName.isEmpty() && lastName.isEmpty()) {
+            errorMessage.append("Client always must have first or last name. Enter at least one of them, please.\n");
             error = true;
-            logger.warn(ex);
         }
-        try {
-            int dLNumber = request.getParameter("dLNumber") != null && !request.getParameter("dLNumber").isEmpty() ? Integer.valueOf(request.getParameter("dLNumber")) : 0;
-            client.setdLNumber(dLNumber);
-        } catch (IllegalArgumentException ex) {
-            message += "Set correct dLNumber. ";
+        Date birthday = model.getBirthday();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1920, Calendar.JANUARY, 1);
+        Date minDate = calendar.getTime();
+        if (birthday != null && (birthday.getTime() < minDate.getTime() || birthday.getTime() > (new Date()).getTime())) {
+            errorMessage.append("Clients birthday has to be in the range from ");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            errorMessage.append(formatter.format(minDate));
+            errorMessage.append(" to ");
+            errorMessage.append(formatter.format(new Date()));
+            errorMessage.append(". Please, enter it correctly.\n");
             error = true;
-            logger.warn(ex);
         }
-        try {
-            int lengthOfDrivingExperience = request.getParameter("lengthOfDrivingExperience") != null && !request.getParameter("lengthOfDrivingExperience").isEmpty() ? Integer.valueOf(request.getParameter("lengthOfDrivingExperience")) : 0;
-            client.setLengthOfDrivingExperience(lengthOfDrivingExperience);
-        } catch (IllegalArgumentException ex) {
-            message += "Set correct birthday. ";
+        int dLNumber = model.getdLNumber();
+        if (dLNumber <= 0) {
+            errorMessage.append("Client always must have driver's license number. Enter it, please.\n");
             error = true;
-            logger.warn(ex);
         }
+        int lengthOfDrivingExperience = model.getLengthOfDrivingExperience();
+        if (lengthOfDrivingExperience < 0) {
+            errorMessage.append("Length of driving experience has to be positive value. Please enter it correctly.\n");
+            error = true;
+        }
+        logger.info("Data validation completed.");
         return !error;
     }
 
-
-    @Override
-    public Client getValue() {
-        return client;
-    }
 }
