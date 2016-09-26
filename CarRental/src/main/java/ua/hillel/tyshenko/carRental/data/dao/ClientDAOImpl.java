@@ -10,10 +10,7 @@ import ua.hillel.tyshenko.carRental.data.service.DataBaseUtil;
 import ua.hillel.tyshenko.carRental.utils.ApplicationLogger;
 
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 //import java.util.logging.Logger;
@@ -22,6 +19,7 @@ import java.util.List;
  * Created by roman on 17.08.16.
  */
 public class ClientDAOImpl implements ClientDAO {
+
     static final Logger logger = ApplicationLogger.getLogger(ClientDAO.class);
 
     private Connection connection;
@@ -43,7 +41,6 @@ public class ClientDAOImpl implements ClientDAO {
         List<ClientDomain> clients = new ArrayList<>();
         try {
             if (connection == null) throw new SQLException("No connection to database.");
-            connection = ConnectionFactory.getInstance().getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             if (resultSet != null) {
@@ -60,7 +57,6 @@ public class ClientDAOImpl implements ClientDAO {
         } finally {
             DataBaseUtil.closeResultSet(resultSet);
             DataBaseUtil.closeStatement(statement);
-            DataBaseUtil.closeConnection(connection);
         }
         logger.info("Get data query occurred.");
         return clients;
@@ -71,6 +67,13 @@ public class ClientDAOImpl implements ClientDAO {
         String query = "SELECT * FROM client_tb WHERE first_name='" + firsName + "' AND last_name='" + lastName + "'";
         List<ClientDomain> clients = this.getItems(query, ALL);
         return clients;
+    }
+
+    @Override
+    public ClientDomain getByDLNumber(int dlNumber) throws SQLException {
+        String query = "SELECT * FROM client_tb WHERE dl_number=" + dlNumber;
+        List<ClientDomain> clients = getItems(query, ONE);
+        return clients.isEmpty() ? null : clients.get(0);
     }
 
     @Override
@@ -87,15 +90,23 @@ public class ClientDAOImpl implements ClientDAO {
         return clients.isEmpty() ? null : clients.get(0);
     }
 
-    private void dataChangeQuery(String query) throws SQLException {
+    private void dataChangeQuery(String query, ClientDomain client) throws SQLException {
+        if (connection == null) throw new SQLException("No connection to database.");
+        statement = connection.prepareStatement(query);
         try {
-            if (connection == null) throw new SQLException("No connection to database.");
-            connection = ConnectionFactory.getInstance().getConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-        } finally {
+            ((PreparedStatement)statement).setString(1, client.getFirstName());
+            ((PreparedStatement)statement).setString(2, client.getLastName());
+            if (client.getBirthday() != null) ((PreparedStatement)statement).setDate(3, DateUtil.getSQLFormatDate(client.getBirthday()));
+            else ((PreparedStatement)statement).setNull(3, Types.DATE);
+            ((PreparedStatement)statement).setInt(4, client.getdLNumber());
+            ((PreparedStatement)statement).setInt(5, client.getLengthOfDrivingExperience());
+            int items = ((PreparedStatement)statement).executeUpdate();
+            if (items == 0) logger.info("No entities changed.");
+        } catch (Exception ex) {
+            logger.info("Fail in data base changing.", ex);
+            throw new SQLException(ex);
+        }finally {
             DataBaseUtil.closeStatement(statement);
-            DataBaseUtil.closeConnection(connection);
         }
         logger.info("Add or change data query occurred.");
     }
@@ -103,33 +114,22 @@ public class ClientDAOImpl implements ClientDAO {
     @Override
     public void add(ClientDomain client) throws SQLException {
         String query = "INSERT INTO client_tb(first_name, last_name, birthday, dl_number, length_of_driving_experience) " +
-                "VALUES ('" + client.getFirstName() + "', '" + client.getLastName() + "', '" +
-                DateUtil.getSQLFormatDate(client.getBirthday()) + "', " + client.getdLNumber() + ", " +
-                client.getLengthOfDrivingExperience() + ")";
-        this.dataChangeQuery(query);
+                "VALUES (?, ?, ?, ?, ?)";
+        this.dataChangeQuery(query, client);
     }
 
     @Override
     public void update(ClientDomain client) throws SQLException {
-        String query = "UPDATE client_tb SET " +
-                "first_name='" + client.getFirstName() + "', " +
-                "last_name='" + client.getLastName() + "', " +
-                "birthday='" + DateUtil.getSQLFormatDate(client.getBirthday()) + "', " +
-                "dl_number=" + client.getdLNumber() + ", " +
-                "length_of_driving_experience=" + client.getLengthOfDrivingExperience() + " WHERE id=" + client.getId();
-        this.dataChangeQuery(query);
+        String query = "UPDATE client_tb SET first_name=?, last_name=?, birthday=?, dl_number=?, " +
+                "length_of_driving_experience=? WHERE id=" + client.getId();
+        this.dataChangeQuery(query, client);
     }
 
     @Override
     public void remove(ClientDomain client) throws SQLException {
-        String query = "DELETE FROM client_tb WHERE id=" + client.getId() + " AND " +
-                "first_name='" + client.getFirstName() + "' AND " +
-                "last_name='" + client.getLastName() + "' AND " +
-                "birthday='" + DateUtil.getSQLFormatDate(client.getBirthday()) + "' AND " +
-                "dl_number=" + client.getdLNumber() + " AND " +
-                "length_of_driving_experience=" + client.getLengthOfDrivingExperience();
-        this.dataChangeQuery(query);
+        String query = "DELETE FROM client_tb WHERE id=" + client.getId() + " AND first_name=? AND last_name=? " +
+                "AND birthday=? IS NULL IS NOT NULL AND dl_number=? AND length_of_driving_experience=?";
+        this.dataChangeQuery(query, client);
     }
-
 
 }
