@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface ClientDAO extends AbstractDAO<ClientDomain> {
     List<ClientDomain> getByFullName(String firsName, String lastName) throws SQLException;
+
+    ClientDomain getByDLNumber(int dlNumber) throws SQLException;
 }
