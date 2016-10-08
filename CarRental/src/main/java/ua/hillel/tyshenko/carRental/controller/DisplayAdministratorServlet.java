@@ -1,9 +1,9 @@
 package ua.hillel.tyshenko.carRental.controller;
 
 import org.apache.log4j.Logger;
-import ua.hillel.tyshenko.carRental.data.dao.CarDAO;
-import ua.hillel.tyshenko.carRental.data.dao.CarDAOImpl;
-import ua.hillel.tyshenko.carRental.data.domain.CarDomain;
+import ua.hillel.tyshenko.carRental.data.dao.AdministratorDAOImpl;
+import ua.hillel.tyshenko.carRental.data.dao.AdministratorDAO;
+import ua.hillel.tyshenko.carRental.data.domain.AdministratorDomain;
 import ua.hillel.tyshenko.carRental.utils.StoreAndCookieUtil;
 
 import javax.servlet.RequestDispatcher;
@@ -19,37 +19,37 @@ import java.sql.SQLException;
 /**
  * Created by roman on 08.10.16.
  */
-@WebServlet(urlPatterns = {"/car_list/display"})
-public class DisplayCarServlet extends HttpServlet {
 
-    static final Logger logger = Logger.getLogger(DisplayCarServlet.class);
+@WebServlet(urlPatterns = {"/admin_list/display"})
+public class DisplayAdministratorServlet extends HttpServlet {
 
-    private static final long serialVersionUID = -4721004270696506053L;
+    final static Logger logger = Logger.getLogger(DeleteAdministratorServlet.class);
 
-    public DisplayCarServlet() {
+    private static final long serialVersionUID = -7420994575316483092L;
+
+    public DisplayAdministratorServlet() {
         super();
     }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.info("Car viewing form.");
+        logger.info("Administrator viewing form.");
         if (request.getParameter("id") == null) {
-            response.sendRedirect(request.getContextPath() + "/car_list");
+            response.sendRedirect(request.getContextPath() + "/admin_list");
             return;
         }
         long id = Long.valueOf(request.getParameter("id"));
         Connection connection = StoreAndCookieUtil.getStoredConnection(request);
         try {
-            CarDAO carDAO = new CarDAOImpl(connection);
-            CarDomain car = carDAO.getById(id);
-            if (car != null) {
-                logger.info("Car data entered correctly.");
-                request.setAttribute("car", car.getCar());
-                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/displayCarView.jsp");
+            AdministratorDAO administratorDAO = new AdministratorDAOImpl(connection);
+            AdministratorDomain administrator = administratorDAO.getById(id);
+            if (administrator != null) {
+                logger.info("Administrator data entered correctly.");
+                request.setAttribute("administrator", administrator.getAdministrator());
+                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/displayAdminView.jsp");
                 dispatcher.forward(request, response);
             } else {
-                request.setAttribute("errorString", "Car with ID: #" + id + " does not exists.");
-                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/car_list");
+                request.setAttribute("errorString", "Administrator with ID: #" + id + " does not exists.");
+                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/admin_list");
                 dispatcher.forward(request, response);
             }
         } catch (SQLException ex) {
