@@ -28,28 +28,33 @@ import java.util.stream.Collectors;
 @WebServlet(urlPatterns = {"/car_list"})
 public class CarListServlet extends HttpServlet {
     private static final long serialVersionUID = -5098121881329935823L;
-    static final Logger logger = ApplicationLogger.getLogger(CarListServlet.class);
+    static final Logger logger = Logger.getLogger(CarListServlet.class);
+
     public CarListServlet() {
         super();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("Extracting of car list from database.");
         List<Car> cars = null;
-        Connection connection;
+        Connection connection = StoreAndCookieUtil.getStoredConnection(request);
         try {
-            connection = ConnectionFactory.getInstance().getConnection();
             CarDAO carDAO = new CarDAOImpl(connection);
-            cars = carDAO.getAll().stream().map(CarDomain::getCar).collect(Collectors.toList());//
+            cars = carDAO.getAll().stream().map(CarDomain::getCar).collect(Collectors.toList());
             logger.info("Car list extracted.");
         } catch (SQLException ex) {
-            logger.warn("Data base exception.", ex);//
+            logger.warn("Data base exception.", ex);
+            request.setAttribute("javax.servlet.error.exception", ex);
+            request.setAttribute("javax.servlet.error.status_code", 500);
+            response.setStatus(500);
         }
         request.setAttribute("carList", cars);
         RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/carListView.jsp");
         dispatcher.forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }

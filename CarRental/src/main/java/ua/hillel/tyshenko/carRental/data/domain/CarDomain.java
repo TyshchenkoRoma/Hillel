@@ -8,32 +8,38 @@ import java.math.BigDecimal;
  * Created by roman on 03.08.16.
  */
 public class CarDomain extends AbstractDomain {
+
     private String numberPlate;
     private String model;
     private Car.Color color;
     private String description;
     private int yearOfManufacture;
     private BigDecimal rentalPrice;
-    private boolean rented;
+    private Car.Status status;
+
+    public CarDomain(Long id, String numberPlate, String model, Car.Color color, String description, int yearOfManufacture, BigDecimal rentalPrice, Car.Status status) {
+        super(id);
+        this.numberPlate = numberPlate;
+        this.model = model;
+        this.color = color;
+        this.description = description;
+        this.yearOfManufacture = yearOfManufacture;
+        this.rentalPrice = rentalPrice;
+        this.status = status;
+    }
 
     public CarDomain(Car car) {
         this.setCar(car);
     }
 
-    public CarDomain( long id , String numberPlate, String model, Car.Color colour, String description, int yearOfManufacture, BigDecimal rentalPrice, boolean rented) {
-        super(id);
-        this.numberPlate = numberPlate;
-        this.model = model;
-        this.color = colour;
-        this.description = description;
-        this.yearOfManufacture = yearOfManufacture;
-        this.rentalPrice = rentalPrice;
-        this.rented = rented;
+    public CarDomain(){
     }
+
     public Car getCar() {
-        return new Car( this.getId(),this.numberPlate,    this.model, this.color,   this.description, this.yearOfManufacture, this.rentalPrice,
-                 this.rented);
+        return new Car(this.getId(), this.numberPlate, this.model, this.color, this.description, this.yearOfManufacture,
+                this.rentalPrice, this.status);
     }
+
     public void setCar(Car car) {
         super.setId(car.getId());
         this.numberPlate = car.getNumberPlate();
@@ -42,7 +48,15 @@ public class CarDomain extends AbstractDomain {
         this.description = car.getDescription();
         this.yearOfManufacture = car.getYearOfManufacture();
         this.rentalPrice = car.getRentalPrice();
-        this.rented = car.isRented();
+        this.status = car.getStatus();
+    }
+
+    public String getNumberPlate() {
+        return numberPlate;
+    }
+
+    public void setNumberPlate(String numberPlate) {
+        this.numberPlate = numberPlate;
     }
 
     public String getModel() {
@@ -53,12 +67,12 @@ public class CarDomain extends AbstractDomain {
         this.model = model;
     }
 
-    public Car.Color getColour() {
+    public Car.Color getColor() {
         return color;
     }
 
-    public void setColour(Car.Color colour) {
-        this.color = colour;
+    public void setColor(Car.Color color) {
+        this.color = color;
     }
 
     public String getDescription() {
@@ -85,12 +99,11 @@ public class CarDomain extends AbstractDomain {
         this.rentalPrice = rentalPrice;
     }
 
-    public boolean isRented() {
-        return rented;
+    public Car.Status getStatus() {
+        return status;
     }
 
-    public void setRented(boolean rented) {
-        this.rented = rented;
+    public void setStatus(Car.Status status) {
+        this.status = status;
     }
-
 }
